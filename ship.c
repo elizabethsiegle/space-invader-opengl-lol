@@ -19,12 +19,7 @@ GLint NextStepInDebug;
 GLint numAliens = ALIENWIDTH * ALIENHEIGHT;
 GLint previousFireTime;
 
-void checkAndFire() {
-  if (spacePressed) {
-    Node* temp = makeNode(makeBullet(SHIPX, SHIPY, shipDX, 0));
-    addNode(temp, &shipBull);
-    spacePressed = false;
-  }
+void fireShot() {
   if(shipBull != NULL) {
     for (Node* temp = shipBull->h; temp != NULL; temp = temp->next) {
       GLdouble xHere = temp->data->xPos + STEP;
@@ -49,12 +44,12 @@ void checkAndFire() {
               aliens[i].alive = false;
               alienHit[i] = 0;
               temp->data->active = false;
-            }
-          }
-        }
-      }
-    }
-  }
+            } //if
+          } //if
+        } //for
+      } //if
+    } //for
+  } //if
   if(bulletShot != NULL) {
       for (Node *temp = bulletShot->h; temp != NULL; temp = temp->next) {
           GLdouble xx = temp->data->xPos + STEP;
@@ -67,11 +62,18 @@ void checkAndFire() {
                   temp->data->active = false;
                   hitReadValue = READVALUEUNIT*DEATHREAD;
                   numHits++;
-                  //exit(0);
-              }
-          }
-      }
+              } //if
+          } //if
+      } //for
+  } //if
+}
+void checkAndFire() {
+  if (spacePressed) {
+    Node* temp = makeNode(makeBullet(SHIPX, SHIPY, shipDX, 0));
+    addNode(temp, &shipBull);
+    spacePressed = false;
   }
+  fireShot();
 }
 
 void drawShip() {
@@ -84,9 +86,9 @@ void drawShip() {
     leftPressed -= STEP;
   }
   else {
-    shipShouldMove = false;
     rightPressed = false;
     leftPressed = false;
+    shipShouldMove = false;
   }
   if (hitReadValue > 0) {
     if (numTime % ALIENSP == 0 ) {

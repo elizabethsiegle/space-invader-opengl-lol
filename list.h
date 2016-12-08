@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-enum{shipBullet, AlienBullet};
 
 typedef struct {
     GLdouble x;
@@ -22,7 +21,7 @@ typedef struct {
     bool alive;
 } Alien;
 
-typedef struct Bullet {
+typedef struct bullet {
     GLdouble xPos;
     GLdouble yPos;
     GLdouble dx;

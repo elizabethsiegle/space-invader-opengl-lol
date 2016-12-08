@@ -2,7 +2,7 @@
 #include "main.h"
 #include "ship.h"
 
-GLint angle = 90;
+GLint angle = 30;
 extern GLint numAliens;
 extern GLint alienHit[ALIENWIDTH * ALIENHEIGHT];
 extern GLdouble leftPressed, rightPressed, spacePressed, downPressed, shipShouldMove;
@@ -25,21 +25,20 @@ GLint previousFireTime;
 
 void alienShoot(GLint t) {
     //alien shoots
-    int enemyColInd[ALIENHEIGHT];  //bottom most alive alien index
-
-    for (int i = 0; i < ALIENHEIGHT; i++) {
-        enemyColInd[i] = -1;
+    int alienInd[ALIENWIDTH];  //bottom most alive alien index
+    for (int i = 0; i < ALIENWIDTH; i++) {
+        alienInd[i] = -1;
     }
 
     for (int i = 0; i < numAliens; i++) {
         if (aliens[i].alive) {
-            enemyColInd[i%ALIENHEIGHT] = i;
+            alienInd[i%ALIENWIDTH] = i;
         }
     }
-    if (numTime % t <= 2) {
-        for (int i = 0; i < ALIENHEIGHT; i++) {
-            if((angle+i) % sendBomb == 2 && enemyColInd[i] - i > -8) {  //random bomb
-                Bullet *b = makeBullet(aliens[enemyColInd[i]].x, aliens[enemyColInd[i]].y, alienDX, alienDY);
+    if (numTime % t == 0) {
+        for (int i = 0; i < ALIENWIDTH; i++) {
+            if((angle+i) % sendBomb == 2 && alienInd[i] - i > -1) {  //random bomb
+                Bullet *b = makeBullet(aliens[alienInd[i]].x, aliens[alienInd[i]].y, alienDX, alienDY);
                 Node *temp = makeNode(b);
                 addNode(temp, &bulletShot);
             }
@@ -62,10 +61,11 @@ bool win() {
 }
 
 bool lose() {
-    for (int i = 0; i < ALIENHEIGHT * ALIENWIDTH; i++) {
+    for (int i = 0; i < numAliens; i++) {
         if(aliens[i].alive) {
             if(aliens[i].x + alienDY <= -VIEWSZ  || numHits == NUMLIVES) {
-                return true;
+              printf("lose");
+              return true;
             }
         }
     }
@@ -77,7 +77,7 @@ void draw() {
     //check if no alien left(WIN)
     if (win()) {
         glPushMatrix();
-        glColor3f(numTime % 3, numTime %3+1, numTime%3+2);
+        // glColor3f(numTime % 3, numTime %3+1, numTime%3+2);
         glRotatef(numTime, 0, 0, 1);
         glBegin(GL_POLYGON);
         glVertex2f(-VIEWSZ/2.0, 0);
@@ -90,11 +90,10 @@ void draw() {
 
     //draw Aliens
     glPushMatrix();
-    for (int i = 0; i < numAliens; i++) {
-
-        if(aliens[i].alive || (!aliens[i].alive && alienHit[i] > -1)) {
-            for (GLint x = 0; x < 3; x++) {
-              printf("ai ya");
+    for (int i = 0; i < ALIENWIDTH*ALIENHEIGHT; i++) {
+        if(aliens[i].alive == true || (aliens[i].alive == false && alienHit[i] > -1)) {
+            for (GLint x = 3; x > 0; x--) {
+                //printf("ai ya");
                 glPushMatrix();
                 glLoadIdentity();
                 glTranslatef(alienDX, alienDY, 0);
@@ -103,8 +102,7 @@ void draw() {
                 glScalef(x/3, x/3, 1);
                 glTranslatef(-aliens[i].x - SHIPWIDTH/2, -aliens[i].y - SHIPWIDTH/2, -1);
 
-                if(!aliens[x].alive && alienHit[x] > -1) {
-
+                if(aliens[x].alive == false && alienHit[x] > -1) {
                     glTranslatef(aliens[i].x + SHIPWIDTH/2, aliens[i].y + SHIPWIDTH/2, 0);
                     glScalef(READVALUEUNIT/alienHit[i], READVALUEUNIT/alienHit[i], 1);
                     glTranslatef(-(aliens[x].x + SHIPWIDTH/2), -(aliens[x].y + SHIPWIDTH/2), 0);
@@ -220,13 +218,6 @@ void draw() {
             glColor3f(0, 1, 0);
             for (Node *temp = shipBull->h; temp != NULL; temp = temp->next) {
                 temp->data->dy += SHIPHEIGHT;
-
-                // if (temp->data->shootAngle == LEFTSHOOT) {
-                //     temp->data->dx -= SHIPHEIGHT/3;
-                // }
-                // else if (temp->data->shootAngle == RIGHTSHOOT) {
-                //     temp->data->dx += SHIPHEIGHT/3;
-                // }
             }
         }
     }
@@ -310,7 +301,6 @@ void keyboard(GLFWwindow *w, int key, int scancode, int action, int mods) {
         case GLFW_KEY_LEFT:
             leftPressed = SHIPWIDTH;
             rightPressed = false;
-            printf("here");
             break;
         case GLFW_KEY_RIGHT:
             rightPressed = SHIPWIDTH;

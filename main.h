@@ -17,7 +17,7 @@
 
 #define WIDTH 600
 #define HEIGHT 800
-#define VIEWSZ 2
+#define VIEWSZ 1
 #define STEP .1
 #define SHIPX 0
 #define SHIPY -.85
@@ -26,9 +26,9 @@
 #define ALIENWIDTH 7
 #define ALIENHEIGHT 5
 #define ALIENROWINT .2 // alien radius
-#define ALIENSP 40 // second
-#define FIRECOOLINGTIME 30 // half a second
-#define DEATHREAD 5
+#define ALIENSP 60 // second
+#define FIRECOOLINGTIME 30
+#define DEATHREAD 6
 #define READVALUEUNIT 20.0
 #define NUMLIVES 6
 

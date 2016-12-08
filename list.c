@@ -7,7 +7,6 @@ Bullet *makeBullet(GLdouble xPos, GLdouble yPos, GLdouble dx, GLdouble dy){
         newBullet->dx = dx;
         newBullet->dy =  dy;
         newBullet->active = true;
-        //newBullet->shootAngle = ang;
     }
     else {
         exit(0);
@@ -51,7 +50,7 @@ void removeNode(Node *n, Node **llist) {
         (*llist)->h = n->next;
     }
     else {
-        for (temp2 = (*llist)->h, temp1=NULL; temp2 != n; temp2 = temp2->next);
+        for (temp2 = (*llist)->h, temp1 = NULL; temp2 != n; temp2 = temp2->next);
         if (n == (*llist)->t)
             (*llist)->t = temp1;
         temp1->next = n->next;
