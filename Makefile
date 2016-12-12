@@ -5,10 +5,10 @@ LDFLAGS=-lX11 -lGL -lGLU -lglfw -lGLEW -lm
 endif
 CC = gcc
 CFLAGS=-g -Wall -I/usr/local/Cellar/glfw3/3.2.1/include
-SOURCES=main.c list.c ship.c
+SOURCES=main.c list.c ship.c #ship.c
 OBJECTS=$(SOURCES:.c=.o)
 DEPS=list.h
-EXECUTABLE=main list ship
+EXECUTABLE=main list ship #ship
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

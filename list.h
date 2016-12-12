@@ -1,9 +1,7 @@
-#ifndef __LIST__H
-#define __LIST__H
-
+#ifndef __LIST__H__
+#define __LIST__H__
 #include <stdio.h>
 #include <stdlib.h>
-
 #ifdef __APPLE__
 #include <GLFW/glfw3.h>
 #else
@@ -11,11 +9,13 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <stdbool.h>
+#include <math.h>
+
+enum{LEFTSHOOT,NORMALSHOOT, RIGHTSHOOT};
 enum{shipBullet, AlienBullet};
 
-typedef struct {
+typedef struct alien {
     GLdouble x;
     GLdouble y;
     GLint index;
@@ -36,13 +36,60 @@ typedef struct Node {
     struct Node* next;
     struct Node* h;
     struct Node* t;
-} Node;
+}Node;
 
-Bullet *makeBullet(GLdouble x, GLdouble y, GLdouble tx, GLdouble ty);
+Bullet *makeBullet(GLdouble x, GLdouble y, GLdouble tx, GLdouble ty, GLint ang);
 Node *makeNode(Bullet *b);
-
-void addNode(Node *n, Node **llist);
-void removeNode(Node *n, Node **llist);
-void clearNodes(Node **llist);
+void add(Node* n, Node** llist);
+void removeNode(Node* n, Node** llist);
+void clearNodes(Node** llist);
 
 #endif
+// #ifndef __LIST__H
+// #define __LIST__H
+//
+// #include <stdio.h>
+// #include <stdlib.h>
+//
+// #ifdef __APPLE__
+// #include <GLFW/glfw3.h>
+// #else
+// #include <GLFW/glfw3.h>
+// #endif
+// #include <stdlib.h>
+// #include <stdio.h>
+// #include <math.h>
+// #include <stdbool.h>
+// enum{shipBullet, AlienBullet};
+//
+// typedef struct {
+//     GLdouble x;
+//     GLdouble y;
+//     GLint index;
+//     bool alive;
+// } Alien;
+//
+// typedef struct Bullet {
+//     GLdouble xPos;
+//     GLdouble yPos;
+//     GLdouble dx;
+//     GLdouble dy;
+//     bool active;
+//     GLint shootAngle;
+// } Bullet;
+//
+// typedef struct Node {
+//     Bullet* data;
+//     struct Node* next;
+//     struct Node* h;
+//     struct Node* t;
+// } Node;
+//
+// Bullet *makeBullet(GLdouble x, GLdouble y, GLdouble tx, GLdouble ty);
+// Node *makeNode(Bullet *b);
+//
+// void addNode(Node *n, Node **llist);
+// void removeNode(Node *n, Node **llist);
+// void clearNodes(Node **llist);
+//
+// #endif
