@@ -16,9 +16,8 @@ Node *bulletShot = NULL;
 Node *shipBull = NULL;
 GLint numTime = 0;
 GLint numHits = 0;
-bool pause = false;
+bool pause, lost = false;
 GLint nextStep = 0;
-bool lost = false;
 
 GLint sendBomb = 7;
 GLint previousFireTime;
@@ -90,19 +89,18 @@ void draw() {
 
     //draw Aliens
     glPushMatrix();
-    for (int i = 0; i < ALIENWIDTH*ALIENHEIGHT; i++) {
-        if(aliens[i].alive == true || (aliens[i].alive == false && alienHit[i] > -1)) {
+    for (int i = 0; i < ALIENWIDTH * ALIENHEIGHT; i++) {
+        if(aliens[i].alive || (!aliens[i].alive && alienHit[i] > -1)) {
             for (GLint x = 3; x > 0; x--) {
                 //printf("ai ya");
                 glPushMatrix();
                 glLoadIdentity();
-                glTranslatef(alienDX, alienDY, 0);
-                glColor3f(x/3, x/3, x/3);
+                //glTranslatef(alienDX, alienDY, 0);
                 glTranslatef(aliens[i].x + SHIPWIDTH/2, aliens[i].y + SHIPWIDTH/2, 1);
                 glScalef(x/3, x/3, 1);
                 glTranslatef(-aliens[i].x - SHIPWIDTH/2, -aliens[i].y - SHIPWIDTH/2, -1);
 
-                if(aliens[x].alive == false && alienHit[x] > -1) {
+                if(!aliens[x].alive && alienHit[x] > -1) {
                     glTranslatef(aliens[i].x + SHIPWIDTH/2, aliens[i].y + SHIPWIDTH/2, 0);
                     glScalef(READVALUEUNIT/alienHit[i], READVALUEUNIT/alienHit[i], 1);
                     glTranslatef(-(aliens[x].x + SHIPWIDTH/2), -(aliens[x].y + SHIPWIDTH/2), 0);
@@ -116,10 +114,10 @@ void draw() {
                 glVertex2f(aliens[i].x + SHIPWIDTH/2 - STEP*2/3, aliens[x].y + SHIPWIDTH/2 + STEP/6);
                 glVertex2f(aliens[x].x + SHIPWIDTH/2 - STEP/6, aliens[x].y + SHIPWIDTH/2 + STEP*2/3);
                 glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP/6, aliens[x].y + SHIPWIDTH/2 + STEP*2/3);
-                glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP*2/3, aliens[x].y + SHIPWIDTH/2 + STEP/6);
-                glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP*2/3, aliens[x].y + SHIPWIDTH/2 - STEP/6);
-                glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP/6, aliens[x].y + SHIPWIDTH/2 - STEP*2/3);
-                glVertex2f(aliens[x].x+ SHIPWIDTH/2 - STEP/6, aliens[x].y + SHIPWIDTH/2 - STEP*2/3);
+                // glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP*2/3, aliens[x].y + SHIPWIDTH/2 + STEP/6);
+                // glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP*2/3, aliens[x].y + SHIPWIDTH/2 - STEP/6);
+                // glVertex2f(aliens[x].x + SHIPWIDTH/2 + STEP/6, aliens[x].y + SHIPWIDTH/2 - STEP*2/3);
+                // glVertex2f(aliens[x].x+ SHIPWIDTH/2 - STEP/6, aliens[x].y + SHIPWIDTH/2 - STEP*2/3);
                 glEnd();
 
                 glPopMatrix();
