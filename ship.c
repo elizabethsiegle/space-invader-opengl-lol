@@ -9,7 +9,7 @@ GLdouble alienDX, alienDY;
 GLdouble fireMissileV = SHIPHEIGHT;
 extern GLint shipShoot;
 
-extern Alien aliens[ALIENHEIGHT * ALIENWIDTH];
+Alien aliens[ALIENHEIGHT * ALIENWIDTH];
 extern Node *bulletShot;
 extern Node *shipBull;
 GLint numTime;
@@ -26,7 +26,6 @@ void fireShot() {
       GLdouble yHere = temp->data->yPos + SHIPHEIGHT;
       if(temp->data->active == true) {
         glPushMatrix();
-        glColor3f(1, .6, .6);
         glTranslatef(temp->data->dx, temp->data->dy, 0);
         glBegin(GL_POLYGON);
         glVertex2f(xHere + SHIPHEIGHT/2, yHere + SHIPHEIGHT/2);

@@ -1,40 +1,33 @@
-#ifndef __MAIN__H
-#define __MAIN__H
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#ifdef __APPLE__
-#include <GLFW/glfw3.h>
-#else
-#include <GLFW/glfw3.h>
-#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "list.h"
 #include <stdbool.h>
-
-
-#define WIDTH 600
-#define HEIGHT 800
-#define VIEWSZ 1
-#define STEP .1
-#define SHIPX 0
-#define SHIPY -.85
-#define SHIPWIDTH .2
-#define SHIPHEIGHT .05
-#define ALIENWIDTH 7
-#define ALIENHEIGHT 5
-#define ALIENROWINT .2 // alien radius
-#define ALIENSP 60 // second
-#define FIRECOOLINGTIME 30
-#define DEATHREAD 6
-#define READVALUEUNIT 20.0
-#define NUMLIVES 6
-
-void alienShoot(GLint t);
-bool win();
-bool lose();
-void draw();
-
+#ifdef __APPLE__
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#else
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #endif
+#define WIDTH 700
+#define HEIGHT 800
+#define VIEWSZIE 1
+#define STEP .1 //STEP IS HALF SHIPWID
+#define SHIPINIX 0
+#define SHIPINIY -.85
+#define SHIPWID .2
+#define SHIPHEI .05
+#define COLOFALIEN 7
+#define ROWOFALIEN 5
+#define ALIENROWINT .2 // alien radius
+#define ALIENSPEED 50 // second
+#define FIRECOOLINGTIME 25 // half a second
+#define DEATHREAD 5
+#define READVALUEUNIT 20.0
+#define NUMLIVES 5
+#define FAILREAD 5
+
+void alienShoot(int numTime);

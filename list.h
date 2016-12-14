@@ -1,47 +1,35 @@
-#ifndef __LIST__H
-#define __LIST__H
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#ifdef __APPLE__
-#include <GLFW/glfw3.h>
-#else
-#include <GLFW/glfw3.h>
-#endif
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+#ifndef objects_h
+#define objects_h
 #include <stdbool.h>
-
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <stdio.h>
+#include <stdlib.h>
+#endif /* objects_h */
+enum{MissileFromShip, MissileFromAlien};
 typedef struct {
-    GLdouble x;
-    GLdouble y;
-    GLint index;
-    bool alive;
+GLdouble centerX;
+GLdouble centerY;
+GLint index;
+GLint ifAlive;
 } Alien;
-
-typedef struct bullet {
-    GLdouble xPos;
-    GLdouble yPos;
-    GLdouble dx;
-    GLdouble dy;
-    bool active;
-    GLint shootAngle;
-} Bullet;
-
-typedef struct Node {
-    Bullet* data;
-    struct Node* next;
-    struct Node* h;
-    struct Node* t;
-} Node;
-
-Bullet *makeBullet(GLdouble x, GLdouble y, GLdouble tx, GLdouble ty);
-Node *makeNode(Bullet *b);
-
-void addNode(Node *n, Node **llist);
-void removeNode(Node *n, Node **llist);
-void clearNodes(Node **llist);
-
-#endif
+typedef struct Missile{
+GLdouble centerX;
+GLdouble centerY;
+GLdouble transX;
+GLdouble transY;
+GLint ifValid;
+GLint shootAngle;
+} Missile;
+typedef struct Node{
+Missile* data;
+struct Node* next;
+struct Node* head;
+struct Node* tail;
+}Node;
+Missile *make_Missile(GLdouble x, GLdouble y,GLdouble tx, GLdouble ty);
+Node *makeNode(Missile* p);
+void addNode(Node* p, Node** list);
+void deleteNode(Node* p, Node** list);
+void clearNode(Node** list);

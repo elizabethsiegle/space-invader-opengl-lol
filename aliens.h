@@ -13,6 +13,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-extern Alien aliens[ALIENHEIGHT * ALIENWIDTH];
+
 
 #endif

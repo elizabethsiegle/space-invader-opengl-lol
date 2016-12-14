@@ -12,7 +12,12 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-
+typedef struct alien {
+    GLdouble x;
+    GLdouble y;
+    GLint index;
+    bool alive;
+} Alien;
 void checkAndFire(); //GLint x, GLint y, GLint w, GLint h
 void drawShip();
 
